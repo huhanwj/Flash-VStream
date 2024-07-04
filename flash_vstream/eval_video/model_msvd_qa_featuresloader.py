@@ -58,7 +58,7 @@ class CustomDataset(Dataset):
 
     def __getitem__(self, index):
         sample = self.questions[index]
-        video_name = sample['video_id']
+        video_name = str(sample['video_id'])
         try:
             video_path = os.path.join(self.video_dir, video_name + '.safetensors')
             video_tensor = load_file(video_path)['feature']
