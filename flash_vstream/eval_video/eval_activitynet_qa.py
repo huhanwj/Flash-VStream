@@ -136,13 +136,8 @@ def main():
         prediction_set[id] = qa_set
 
     # Set the OpenAI API key.
-    openai.api_key = args.api_key # Your API key here
-    if args.api_type:
-        openai.api_type = args.api_type
-    if args.api_version:
-        openai.api_version = args.api_version
-    if args.api_base:
-        openai.api_base = args.api_base # Your API base here
+    openai.api_key = os.environ["OPENAI_API_KEY"]
+    openai.api_base = "https://api.aiproxy.io/v1"
     num_tasks = args.num_tasks
 
     # While loop to ensure that all captions are processed.

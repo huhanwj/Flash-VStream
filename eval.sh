@@ -14,8 +14,8 @@ date_device="$(date +%m%d)_${ngpus}${gputype}"
 #your_model_checkpoint_path = "/ckpt"
 echo start eval
 # define your openai info here
-OPENAIKEY="sk-proj-QF2mlTYRd2kOgAWLBuxNT3BlbkFJZCish6BWeNWOszMXNhaU"
-#OPENAIBASE = None
+OPENAIKEY=OPENAI_API_KEY
+OPENAIBASE="https://api.aiproxy.io/v1"
 #OPENAITYPE = None
 #OPENAIVERSION = None
 
@@ -29,7 +29,7 @@ do
         --dataset ${dataset} \
         --num_chunks $ngpus \
         --api_key $OPENAIKEY \
-#        --api_base $OPENAIBASE \
+        --api_base $OPENAIBASE \
 #        --api_type $OPENAITYPE \
 #        --api_version $OPENAIVERSION \
         --test \
