@@ -4,6 +4,7 @@ import os
 import ast
 import json
 import openai
+from openai import OpenAI
 import argparse
 from tqdm import tqdm
 from time import sleep
@@ -30,6 +31,13 @@ def annotate(prediction_set, caption_files, output_dir):
     Evaluates question and answer pairs using GPT-3
     Returns a score for correctness.
     """
+    openai_api_key = "vllm"
+    openai_api_base = "http://localhost:8000/v1"
+    client = OpenAI(
+        api_key=openai_api_key,
+        base_url=openai_api_base,
+    )
+
     for file in tqdm(caption_files):
         key = file[:-5] # Strip file extension
         qa_set = prediction_set[key]
@@ -38,8 +46,8 @@ def annotate(prediction_set, caption_files, output_dir):
         pred = qa_set['pred']
         try:
             # Compute the correctness score
-            completion = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
+            completion = client.chat.completions.create(
+                model="Yi-1.5-9B-Chat",
                 messages=[
                     {
                         "role": "system",
@@ -68,7 +76,7 @@ def annotate(prediction_set, caption_files, output_dir):
                 temperature=0.002
             )
             # Convert response to a Python dictionary.
-            response_message = completion["choices"][0]["message"]["content"]
+            response_message = completion.choices[0].message.content
             response_dict = ast.literal_eval(response_message)
             result_qa_pair = [response_dict, qa_set]
 

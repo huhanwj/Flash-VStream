@@ -105,7 +105,7 @@ def run_inference(args):
         # Check if the video exists
         if os.path.exists(video_path):
             video = load_video(video_path)
-            video = image_processor.preprocess(video, return_tensors='pt')['pixel_values'].half().cuda()
+            video = image_processor.preprocess(video, return_tensors='pt')['pixel_values'].bfloat16().cuda()
             video = [video]
             
         qs = question
